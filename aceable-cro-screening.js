@@ -39,7 +39,33 @@ $(document).ready(function() {
 
 
 // Answer
+<html>
+<head>
+<script>
+// Your script runs here!
+  function replaceHeader(text) {
+    // check to make sure 'text' is a string
+    if (typeof text !== 'string') {
+      // if text is not a string - log the error and end function.
+      console.error('replaceHeader `text` must be a string.');
+      return;
+    }
+    document.getElementById('title').innerHTML = (text);
+  }
+  // Onload requires an anonymous function if the function is being invoked - i allow for strings to be passed so we can use the function for different things if we want
+  // To change header text, edit the string below.
+  window.onload = () => { replaceHeader('Hire me pls.') };
+</script>
+</head>
+<body>
+<h1 id="title">Placeholder test for H1</h1>
+<div class="element"></div>
+<div class="element"></div>
+<div class="element"></div>
+<div class="element"></div>
 
+</body>
+</html>
 
 
 
@@ -55,7 +81,12 @@ $(document).ready(function() {
 
 
 // * Answer
-
+(function(d, $){
+  ['foo', 'bar', 'baz', 'bop'].map((className) => {
+    d(`li.${className} a`)
+    .attr('title', `I am a ${className}`);
+  })
+})(dojo, dojo.query);
 
 
 
@@ -100,7 +131,22 @@ var menuItems = [
 ];
 
 // * Answer
-
+// here i cover for some edge cases like - "what if something in the middle has no extras - not just the item at the last index?" and "what if there are extras but an empty array of extras"
+function printMenu() {
+  let menu = [];
+  menuItems.forEach((item) => {
+    if (item.extras && item.extras.length) {
+      let extras = [];
+      item.extras.forEach((extra) => {
+        extras.push(extra);
+      });
+      menu.push(`${item.name} (${extras.join(', ')})`);
+    } else {
+      menu.push(`${item.name}`);
+    }
+  });
+  return menu
+}
 
 
 
@@ -120,3 +166,17 @@ for (var i = 0; i <= 5; i++) {
 console.log('The next five days are ', dates.join(', '));
 
 // Answer
+// I suppose the console.log() says "the next five days are...". Then it logs
+// the next 5 days PLUS todays date. And todays date is not "the next 5 days". So
+// I assume the problem is that the function should only return the next 5 days
+// so the way to fix it is to have the for loop start at 1 instead of at 0.
+// This way it will print the next 5 days only
+var date = new Date(),
+    day = date.getDate(),
+    month = date.getMonth(),
+    dates = [];
+
+for (var i = 1; i <= 5; i++) {
+  dates.push(month + '/' + (day + i));
+}
+console.log('The next five days are ', dates.join(', '));
